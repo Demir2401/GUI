@@ -60,9 +60,4 @@ CheckVar1 = IntVar()
 label_height = tkinter.Label(window, font=("Arial", 12), text = "Undercoat :").grid(row=6, column=0)
 tkinter.Checkbutton(window, text = "required", variable = CheckVar1, onvalue = 1, offvalue = 0).grid(row=6, column=1)
 
-#called when button is pressed
-def calculate():
-    tkinter.Label(window, text="Price :" + wall_squ_meter()).grid(row=16, column=2)
-tkinter.Button(window, text = "calculate", command = calculate).grid(row=15, column=2)
-
 window.mainloop()
