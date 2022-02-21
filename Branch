@@ -1,5 +1,7 @@
 import tkinter
 from tkinter import *
+import tkinter.messagebox
+
 window = tkinter.Tk()
 label_title = tkinter.Label(window, font=("Arial", 25), text="The Decorators").grid(row=0, column=1)
 
@@ -16,19 +18,27 @@ label_address = tkinter.Label(window, font=("Arial", 12), text="Address :").grid
 tkinter.Entry(window).grid(row=3, column=1)
 
 #email
-label_email = tkinter.Label(window, font=("Arial", 12), text="Email :").grid(row=4, column=0)
+label_email_address = tkinter.Label(window, font=("Arial", 12), text="Email :").grid(row=4, column=0)
 tkinter.Entry(window).grid(row=4, column=1)
 
+
 #height
+room_height = tkinter.StringVar()
 label_height = tkinter.Label(window, font=("Arial", 12), text = "Height :").grid(row=1, column=2)
-height = tkinter.Entry(window)
+height = tkinter.Entry(window, textvariable = room_height)
 height.grid(row = 1, column = 3)
 
 #length of 4 walls
 label_length = tkinter.Label(window, font=("Arial", 12), text="Length of walls :").grid(row=3, column=2)
+
 label_length_1 = tkinter.Label(window, font=("Arial", 12), text="Wall 1 :").grid(row=4, column=2)
+
+
+
 label_length_2 = tkinter.Label(window, font=("Arial", 12), text="Wall 2 :").grid(row=5, column=2)
+
 label_length_3 = tkinter.Label(window, font=("Arial", 12), text="Wall 3 :").grid(row=6, column=2)
+
 label_length_4 = tkinter.Label(window, font=("Arial", 12), text="Wall 4 :").grid(row=7, column=2)
 length = tkinter.Entry(window)
 length.grid(row=4, column=3)
@@ -60,27 +70,35 @@ CheckVar1 = IntVar()
 label_height = tkinter.Label(window, font=("Arial", 12), text = "Undercoat :").grid(row=6, column=0)
 tkinter.Checkbutton(window, text = "required", variable = CheckVar1, onvalue = 1, offvalue = 0).grid(row=6, column=1)
 
-'''
-isbn 10
-0847863174
-'''
 
-#total = 0 * 1 + 8 * 2 +4 * 3... + 7 *9
-isbn = '0847863174'
+isbn ='0847863174'
 total = 0
-for x in range(0, 9):
+for x in range (0, 9):
     total += int(isbn[x]) * (x+1)
-    print(x+1, isbn[x], total)
-print(total)
-cd = total % 11
-print(f"the check digit for the isbn-10 code {isbn} is {cd}")
 
-user_in = input("please input something")
-if user_in == None:
-    print("you have entered anything")
-if len(user_in) < 5:
-    print("you must input something longer than five characters")
-if not user_in isdigit():
-    print("must be numeric")
+cd = total % 11
+print(f"the check digit for the ISBN-10 code {isbn} is {cd}")
+
+def calc():
+    error_msg = ""
+    if room_height.get() is None:
+        error_msg = "You have not entered anything for the height"
+    elif not room_height.get().isdigit():
+        error_msg = "Height must be numeric"
+    elif len(room_height.get()) > 2:
+        error_msg = "You must input something shorter than 3 digits for the height"
+    else:
+        height = int(room_height.get())
+        if height < 2 or height > 10:
+            error_msg = "Height must be between 2 and 10"
+    if error_msg == "":
+        tkinter.messagebox.showinfo('title', f"You input {height} for the height of the room")
+    else:
+        tkinter.messagebox.showinfo('title', error_msg)
+
+
+window.title("Button GUI")
+calc_button = tkinter.Button(window, text = "Calculate", command=calc)
+calc_button.grid(row=17, column=1)
 
 window.mainloop()
